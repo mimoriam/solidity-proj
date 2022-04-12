@@ -26,4 +26,10 @@ contract Lottery {
         // Only the owner can execute the next lines
         return address(this).balance;
     }
+
+    // Now we need to return random user who wins the lottery
+    // Solidity has no random function so, we gotta make one:
+    function random() public view returns (uint) {
+        return uint(keccak256(abi.encodePacked(block.difficulty, block.timestamp, players.length)));
+    }
 }
