@@ -12,4 +12,18 @@ contract Lottery {
         // Set the owner of the contract by the contract compiler
         manager = msg.sender;
     }
+
+    // Add the player who sents ether (in wei) to the list of users playing the lottery
+    receive() external payable {
+        require(msg.value == 0.1 ether);
+        // Only execute next lines if ether sent is 0.1
+        players.push(payable(msg.sender));
+    }
+
+    // Simple function to get total balance of the lottery
+    function getBalance() public view returns (uint) {
+        require(msg.sender == manager);
+        // Only the owner can execute the next lines
+        return address(this).balance;
+    }
 }
